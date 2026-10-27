@@ -1546,6 +1546,10 @@ input[type=range]{accent-color:#2f8cf0}
   .form{padding:12px}
 }
 
+#banner pre{background:none!important;color:inherit;-webkit-background-clip:border-box;background-clip:border-box;filter:drop-shadow(0 2px 3px rgba(20,40,100,.3))}
+#banner pre svg.logo{display:block;margin-left:auto;width:min(340px,40vw);height:auto}
+@media (max-width:980px){#banner pre svg.logo{width:240px}}
+
 input[type=password]{width:100%;background:#fff;color:#1a2246;border:1px solid #8f9db6;border-radius:5px;padding:6px 8px;box-shadow:inset 0 1px 2px rgba(20,40,100,.12)}
 input[type=password]:focus{outline:none;border-color:#2f8cf0;box-shadow:0 0 0 3px rgba(80,160,255,.3)}
 #tray .acct{border:1px solid #6f8db8;border-radius:999px;background:linear-gradient(#fff,#e3eefa);color:#1b5fc0;font-family:var(--f-ui);font-size:12px;font-weight:700;padding:1px 10px;height:22px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1847,7 +1851,9 @@ settings:String.raw` .-----.
 const LET={H:["██╗  ██╗","██║  ██║","███████║","██╔══██║","██║  ██║","╚═╝  ╚═╝"],I:["██╗","██║","██║","██║","██║","╚═╝"],
   M:["███╗   ███╗","████╗ ████║","██╔████╔██║","██║╚██╔╝██║","██║ ╚═╝ ██║","╚═╝     ╚═╝"],T:["████████╗","╚══██╔══╝","   ██║   ","   ██║   ","   ██║   ","   ╚═╝   "],
   S:["███████╗","██╔════╝","███████╗","╚════██║","███████║","╚══════╝"],U:["██╗   ██╗","██║   ██║","██║   ██║","██║   ██║","╚██████╔╝"," ╚═════╝ "]};
-$("bannerArt").textContent=[0,1,2,3,4,5].map(r=>"HIMITSU".split("").map(c=>LET[c][r]).join("")).join("\n");
+(function(){const rows=[0,1,2,3,4,5].map(r=>[..."HIMITSU"].map(c=>LET[c][r]).join(""));const W=Math.max(...rows.map(r=>[...r].length)),CW=6,CH=9;let sh="",fg="";
+  rows.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch===" ")return;const R=`<rect x="${x*CW}" y="${y*CH}" width="${CW}" height="${CH}"/>`;if(ch==="█")fg+=R;else sh+=R}));
+  $("bannerArt").innerHTML=`<svg class="logo" viewBox="0 0 ${W*CW} ${6*CH}" width="${W*CW}" height="${6*CH}" shape-rendering="crispEdges" aria-hidden="true"><defs><linearGradient id="lgC" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${6*CH}"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#dfe7f5"/><stop offset=".48" stop-color="#7d8db0"/><stop offset=".55" stop-color="#f4f8ff"/><stop offset=".8" stop-color="#a9b7d2"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs><g fill="#ff5ca9" opacity=".55" transform="translate(4 5)">${fg}${sh}</g><g fill="#2b3a66">${sh}</g><g fill="url(#lgC)">${fg}</g></svg>`})();
 
 function asciiFieldFill(){const el=$("asciiField");const cols=Math.ceil(innerWidth/7.2)+2,rows=Math.ceil(innerHeight/14)+2;const ch="01#+*:.░▒/\\|=-~<>";
   let out="";let seed=7;const r=()=>(seed=(seed*16807)%2147483647)/2147483647;
