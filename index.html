@@ -2807,7 +2807,7 @@ function buildGal(body,w,id){
 }
 
 /* ================= 라디오 ================= */
-const audio=new Audio();audio.preload="none";const srcCache={};let actx=null,analyser=null,freq=null;
+const audio=new Audio();audio.crossOrigin="anonymous";audio.preload="none";const srcCache={};let actx=null,analyser=null,freq=null;
 function ensureAnalyser(){if(analyser||!window.AudioContext)return;try{actx=new AudioContext();const src=actx.createMediaElementSource(audio);analyser=actx.createAnalyser();analyser.fftSize=64;src.connect(analyser);analyser.connect(actx.destination);freq=new Uint8Array(analyser.frequencyBinCount)}catch(e){analyser=null}}
 const P={idx:-1,playing:false,loading:false,repeat:"all",shuffle:false,
   async play(i){const t=S.tracks[i];if(!t)return;this.idx=i;
